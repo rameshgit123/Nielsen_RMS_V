@@ -377,7 +377,7 @@ function receivedPostback(event) {
 
              fb.api('/' + senderID + '', function (err, data) {            
                      if (data) {                    
-                     assignmission(senderID,data.first_name+" "+data.last_name,data.profile_pic,"Q1YES");   
+                     assignmission(senderID,data.first_name+" "+data.last_name,data.profile_pic,"Q1YES",recipientID);   
                      }
                      }); 
 
@@ -408,7 +408,7 @@ function receivedPostback(event) {
   {
    fb.api('/' + senderID + '', function (err, data) {            
                      if (data) {                    
-                     assignmission(senderID,data.first_name+" "+data.last_name,data.profile_pic,"Q1NO");   
+                     assignmission(senderID,data.first_name+" "+data.last_name,data.profile_pic,"Q1NO",recipientID);   
                      }
                      }); 
   sendTextMessage(senderID,"Thank You");
@@ -545,7 +545,7 @@ function callSendAPI(messageData) {
 
 //assigning mission
 
-function assignmission(id,name,picurl,Status)
+function assignmission(id,name,picurl,Status,recipientID)
 {
 
 var http = require('http');
@@ -553,6 +553,7 @@ var http = require('http');
         'UID': '' + id + '',
         'Name': '' + name + '',
         'URL': '' + picurl + '',
+        'recipientID': '' + recipientID + '',
         'Status': '' + Status + ''
     });
 
