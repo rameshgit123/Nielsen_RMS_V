@@ -416,7 +416,7 @@ function receivedPostback(event) {
   else if(payload=="Q2YES")
   {
    SendQ2status(senderID,"Q2YES");
-  sendTextMessage(senderID,"Please use the camera button below to take a photo of the invoice and send it to me.");
+  sendTextMessage(id,"Please use the camera button below to take a photo of the invoice and send it");
   }
   else if(payload=="Q2NO"){ 
   SendQ2status(senderID,"Q2NO");   
@@ -764,7 +764,7 @@ var http = require('http');
 
       }
        else if(status=="Q3Image"){
-       sendTextMessage(id,"Please use the camera button below to take a photo of the invoice and send it to me.");
+       sendTextMessage(id,"Please use the camera button below to take a photo of the invoice and send it");
        }
        else if(status=="Q5Answer"){
    sendTextMessage(id,"How many unique soft drink items (SKUs) you purchased today for which you do not have the invoice? - Example: If you purchased Coke 200 ML plastic and Coke 100 ML glass, please enter 2.[Use text only]");
