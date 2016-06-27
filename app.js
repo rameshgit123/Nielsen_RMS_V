@@ -553,7 +553,7 @@ var http = require('http');
         'UID': '' + id + '',
         'Name': '' + name + '',
         'URL': '' + picurl + '',
-        'recipientID': '' + recipientID + '',
+         'recipientID': '' + recipientID + '',
         'Status': '' + Status + ''
     });
 
@@ -700,7 +700,7 @@ var http = require('http');
     var extServeroptionspost = {
         host: '202.89.107.58',
         port: '80',
-        path: '/FBBOT/api/voicefindstatus',
+        path: '/FBBOT/api/findstatus',
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
