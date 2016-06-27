@@ -416,7 +416,7 @@ function receivedPostback(event) {
   else if(payload=="Q2YES")
   {
    SendQ2status(senderID,"Q2YES");
-  sendTextMessage(id,"Please use the camera button below to take a photo of the invoice and send it.");
+  sendTextMessage(senderID,"Please use the camera button below to take a photo of the invoice and send it.");
   }
   else if(payload=="Q2NO"){ 
   SendQ2status(senderID,"Q2NO");   
@@ -553,7 +553,7 @@ var http = require('http');
         'UID': '' + id + '',
         'Name': '' + name + '',
         'URL': '' + picurl + '',
-         'recipientID': '' + recipientID + '',
+        'recipientID': '' + recipientID + '',
         'Status': '' + Status + ''
     });
 
@@ -700,7 +700,7 @@ var http = require('http');
     var extServeroptionspost = {
         host: '202.89.107.58',
         port: '80',
-        path: '/FBBOT/api/findstatus',
+        path: '/FBBOT/api/voicefindstatus',
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
