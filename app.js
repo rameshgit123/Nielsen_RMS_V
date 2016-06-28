@@ -562,7 +562,7 @@ var http = require('http');
     var extServeroptionspost = {
         host: '202.89.107.58',
         port: '80',
-        path: '/FBBOT/api/InitStoreAudit',
+        path: '/BOTAPI/api/InitStoreAudit',
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -606,7 +606,7 @@ var http = require('http');
     var extServeroptionspost = {
         host: '202.89.107.58',
         port: '80',
-        path: '/FBBOT/api/QTwostatus',
+        path: '/BOTAPI/api/QTwostatus',
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -700,7 +700,7 @@ var http = require('http');
     var extServeroptionspost = {
         host: '202.89.107.58',
         port: '80',
-        path: '/FBBOT/api/voicefindstatus',
+        path: '/BOTAPI/api/voicefindstatus',
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
