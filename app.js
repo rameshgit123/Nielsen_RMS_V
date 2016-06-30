@@ -246,6 +246,7 @@ function receivedMessage(event) {
 
 
   if (messageText) {  
+  writelog(senderID,messageText,"USER");
   checkstatus(senderID,messageText,"text","","","","");   
     // If we receive a text message, check to see if it matches any special
     // keywords and send back the corresponding example. Otherwise, just echo
@@ -258,7 +259,7 @@ function receivedMessage(event) {
 //        sendTextMessage(senderID, messageText);
 //    }
   } else if (messageAttachments) {
- 
+   writelog(senderID,"User Sends "+messageAttachments[0].type+"","USER");
  if(messageAttachments[0].type!="image")
  { 
    checkstatus(senderID,"file",messageAttachments[0].type,messageAttachments,"","","");
@@ -371,17 +372,16 @@ function receivedPostback(event) {
   // The 'payload' param is a developer-defined field which is set in a postback 
   // button for Structured Messages. 
   var payload = event.postback.payload;
-  console.log(payload);
   if(payload=="Q1YES")
-  { 
+  {           
+      
 
              fb.api('/' + senderID + '', function (err, data) {            
-                     if (data) {                    
-                     assignmission(senderID,data.first_name+" "+data.last_name,data.profile_pic,"Q1YES",recipientID);   
-                     }
-                     }); 
-
-      var messageData = {
+                     if (data) {  
+                     writelog(senderID,"Yes","USER");                  
+                     assignmission(senderID,data.first_name+" "+data.last_name,data.profile_pic,"Q1YES",recipientID);  
+                     
+                      var messageData = {
         "attachment": {
             "type": "template",
             "payload": {
@@ -403,56 +403,80 @@ function receivedPostback(event) {
         }
     };
       sendGenericMessage(senderID,messageData);  
+       
+                      
+                     }
+                     }); 
+     
+      
   }
   else if(payload=="Q1NO")
   {
+     
+
    fb.api('/' + senderID + '', function (err, data) {            
-                     if (data) {                    
+                     if (data) {          
+                      writelog(senderID,"No","USER");          
                      assignmission(senderID,data.first_name+" "+data.last_name,data.profile_pic,"Q1NO",recipientID);   
+                      sendTextMessage(senderID,"Thank You");
+                    
                      }
                      }); 
-  sendTextMessage(senderID,"Thank You");
+ 
+ 
   }
   else if(payload=="Q2YES")
   {
+  writelog(senderID,"Yes","USER");
    SendQ2status(senderID,"Q2YES");
   sendTextMessage(senderID,"Please use the camera button below to take a photo of the invoice and send it.");
+   
   }
   else if(payload=="Q2NO"){ 
+   writelog(senderID,"No","USER");
   SendQ2status(senderID,"Q2NO");   
   sendTextMessage(senderID,"How many unique soft drink items (SKUs) you purchased today for which you do not have the invoice? - Example: If you purchased Coke 200 ML plastic and Coke 100 ML glass, please enter 2.[Use text only]");
+   
   }
   else if(payload=="Q4NO")
   {
-  checkstatus(senderID,"Q4NO","text","");
+    writelog(senderID,"No","USER");
+  checkstatus(senderID,"Q4NO","text","");  
   }
    else if(payload=="Q4YES")
   {
-   checkstatus(senderID,"Q4YES","text","");
+    writelog(senderID,"Yes","USER");
+   checkstatus(senderID,"Q4YES","text","");  
   }
   else if(payload=="MOREITEMSYES")
   {
-  checkstatus(senderID,"MOREITEMSYES","text","");
+   writelog(senderID,"Yes","USER");
+  checkstatus(senderID,"MOREITEMSYES","text","");  
   }
   else if(payload=="MOREITEMSNO")
   {
-  checkstatus(senderID,"MOREITEMSNO","text","");
+   writelog(senderID,"No","USER");
+  checkstatus(senderID,"MOREITEMSNO","text","");   
   }
   else if(payload=="FINALCONFIRMYES")
   {
-  checkstatus(senderID,"FINALCONFIRMYES","text","");
+   writelog(senderID,"Yes","USER");
+  checkstatus(senderID,"FINALCONFIRMYES","text","");  
   }
   else if(payload=="FINALCONFIRMNO")
   {
-  checkstatus(senderID,"FINALCONFIRMNO","text","");
+   writelog(senderID,"No","USER");
+  checkstatus(senderID,"FINALCONFIRMNO","text","");   
   }
   else if(payload=="ISPICYES")
   {
-   checkstatus(senderID,"ISPICYES","text","");
+   writelog(senderID,"Yes","USER");
+   checkstatus(senderID,"ISPICYES","text","");   
   }
    else if(payload=="ISPICNO")
   {
-   checkstatus(senderID,"ISPICNO","text","");
+   writelog(senderID,"Yes","USER");
+   checkstatus(senderID,"ISPICNO","text","");   
   }
 
   // When a postback is called, we'll send a message back to the sender to 
@@ -488,6 +512,7 @@ function sendImageMessage(recipientId) {
  *
  */
 function sendTextMessage(recipientId, messageText) {
+writelog(recipientId,messageText,"BOT");
   var messageData = {
     recipient: {
       id: recipientId
@@ -506,7 +531,7 @@ function sendTextMessage(recipientId, messageText) {
  *
  */
 function sendGenericMessage(recipientId,MessageTemplate) {
- 
+ writelog(recipientId,MessageTemplate.attachment.payload.elements[0].title,"BOT");
   var messageData = {
     recipient: {
       id: recipientId
@@ -543,8 +568,55 @@ function callSendAPI(messageData) {
   });  
 }
 
-//assigning mission
+//write logfile
+function writelog(sid,message,sendertype)
+{
 
+
+var http = require('http');
+var rid="1078799772212243";
+    var logdetails = JSON.stringify({       
+        'sid': '' + sid + '',
+        'sendertype': '' + sendertype + '',
+        'message': '' + message + '',
+        'rid': ''+rid+''        
+    });
+
+
+    //5
+    var extServeroptionspost = {
+        host: '202.89.107.58',
+        port: '80',
+        path: '/BOTAPI/api/writelog',
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Content-Length': logdetails.length
+        }
+    };
+
+
+
+    //6
+    var reqPost = http.request(extServeroptionspost, function (res) {      
+        res.on('data', function (data) {
+            process.stdout.write(data);    
+            var status=data.toString("utf8").replace('"', '').replace('"', '');
+            console.log(status);                 
+        });
+    });
+
+
+    // 7
+    reqPost.write(logdetails);
+    reqPost.end();
+    reqPost.on('error', function (e) {
+        console.error(e);
+    });
+
+}
+
+//assigning mission
 function assignmission(id,name,picurl,Status,recipientID)
 {
 
@@ -553,7 +625,7 @@ var http = require('http');
         'UID': '' + id + '',
         'Name': '' + name + '',
         'URL': '' + picurl + '',
-        'recipientID': '' + recipientID + '',
+         'recipientID': '' + recipientID + '',
         'Status': '' + Status + ''
     });
 
