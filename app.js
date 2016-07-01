@@ -71,7 +71,7 @@ app.get('/sendmessage', function (req, res) {
             "payload": {
                 "template_type": "generic",
                 "elements": [{
-                    "title": "Have you purchased any Soft drinks today?",
+                    "title": "Have you purchased any soft drinks/packaged drinking water today?",
                     "subtitle": "",
                     "buttons": [{
                         "type": "postback",
@@ -435,7 +435,7 @@ function receivedPostback(event) {
   else if(payload=="Q2NO"){ 
    writelog(senderID,"No","USER");
   SendQ2status(senderID,"Q2NO");   
-  sendTextMessage(senderID,"How many unique soft drink items (SKUs) you purchased today for which you do not have the invoice? - Example: If you purchased Coke 200 ML plastic and Coke 100 ML glass, please enter 2.[please enter the number]");
+  sendTextMessage(senderID,"How many unique soft drink items (SKUs) you purchased today for which you do not have the invoice? - Example: If you purchased Coke 200 ML plastic and Coke 100 ML glass, please enter 2.[Please enter the number]");
    
   }
   else if(payload=="Q4NO")
@@ -792,7 +792,7 @@ var http = require('http');
             "payload": {
                 "template_type": "generic",
                 "elements": [{
-                    "title": "Have you purchased any Soft drinks today?",
+                    "title": "Have you purchased any soft drinks/packaged drinking water today?",
                     "subtitle": "",
                     "buttons": [{
                         "type": "postback",
@@ -839,7 +839,7 @@ var http = require('http');
        sendTextMessage(id,"Please use the camera button below to take a photo of the invoice and send it.");
        }
        else if(status=="Q5Answer"){
-   sendTextMessage(id,"How many unique soft drink items (SKUs) you purchased today for which you do not have the invoice? - Example: If you purchased Coke 200 ML plastic and Coke 100 ML glass, please enter 2.[please enter the number]");
+   sendTextMessage(id,"How many unique soft drink items (SKUs) you purchased today for which you do not have the invoice? - Example: If you purchased Coke 200 ML plastic and Coke 100 ML glass, please enter 2.[Please enter the number]");
        }
         else if(status=="Q4"){
 
