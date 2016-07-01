@@ -425,6 +425,31 @@ function receivedPostback(event) {
  
  
   }
+  else if(payload=="USER_DEFINED_PAYLOAD")
+  {
+      var messageData = {
+        "attachment": {
+            "type": "template",
+            "payload": {
+                "template_type": "generic",
+                "elements": [{
+                    "title": "Have you purchased any soft drinks/packaged drinking water today?",
+                    "subtitle": "",
+                    "buttons": [{
+                        "type": "postback",
+                        "title": "Yes",
+                        "payload": "Q1YES"
+                    }, {
+                        "type": "postback",
+                        "title": "No",
+                        "payload": "Q1NO"
+                    }]
+                }]
+            }
+        }
+    };
+      sendGenericMessage(senderID,messageData); 
+  }
   else if(payload=="Q2YES")
   {
   writelog(senderID,"Yes","USER");
