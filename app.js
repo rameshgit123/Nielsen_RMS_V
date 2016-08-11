@@ -378,7 +378,8 @@ function receivedPostback(event) {
 
              fb.api('/' + senderID + '', function (err, data) {            
                      if (data) {  
-                     writelog(senderID,"Yes","USER");                  
+                     writelog(senderID,"Yes","USER");  
+                     setTimeout(function(){               
                      assignmission(senderID,data.first_name+" "+data.last_name,data.profile_pic,"Q1YES",recipientID);  
                      
                       var messageData = {
@@ -403,6 +404,7 @@ function receivedPostback(event) {
         }
     };
       sendGenericMessage(senderID,messageData);  
+      }, 500);   
        
                       
                      }
@@ -416,10 +418,12 @@ function receivedPostback(event) {
 
    fb.api('/' + senderID + '', function (err, data) {            
                      if (data) {          
-                      writelog(senderID,"No","USER");          
+
+                      writelog(senderID,"No","USER");  
+                       setTimeout(function(){              
                      assignmission(senderID,data.first_name+" "+data.last_name,data.profile_pic,"Q1NO",recipientID);   
                       sendTextMessage(senderID,"Thank You");
-                    
+                    }, 500);   
                      }
                      }); 
  
@@ -453,14 +457,18 @@ function receivedPostback(event) {
   else if(payload=="Q2YES")
   {
   writelog(senderID,"Yes","USER");
+    setTimeout(function(){      
    SendQ2status(senderID,"Q2YES");
   sendTextMessage(senderID,"Please use the camera button below to take a photo of the invoice and send it.");
+   }, 500);   
    
   }
   else if(payload=="Q2NO"){ 
    writelog(senderID,"No","USER");
+    setTimeout(function(){      
   SendQ2status(senderID,"Q2NO");   
   sendTextMessage(senderID,"How many soft drink items (SKUs) you purchased today? [Please enter a number]");
+   }, 500);   
    
   }
   else if(payload=="Q4NO")
